@@ -157,7 +157,7 @@ table.t td.x{width:28px;text-align:center}
   <button class="btn" id="bXlsx">⬇ Excel</button>
   <button class="btn pri" id="bPdf">⬇ PDF</button>
  </div>
- <div class="tabs"><button class="tab on" data-t="form">กรอกข้อมูล</button><button class="tab" data-t="pv">ตัวอย่างฟอร์ม</button><a class="nav" id="navDrp" href="https://drp-sgr.vercel.app/" hidden>Daily Report →</a></div>
+ <div class="tabs"><button class="tab on" data-t="form">กรอกข้อมูล</button><button class="tab" data-t="pv">Preview Report</button></div>
 </div>
 
 <main>
@@ -209,6 +209,9 @@ table.t td.x{width:28px;text-align:center}
    </div>
   </div>
 
+  <div class="card" style="text-align:center">
+   <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" id="bXlsx2" style="font-size:15px;padding:9px 20px">⬇ ดาวน์โหลด Excel</button><button class="btn" id="bPdf2" style="font-size:15px;padding:9px 20px">⬇ ดาวน์โหลด PDF</button></div>
+  </div>
   <div class="card" id="sendCard" style="display:none;text-align:center">
    <button class="btn pri" id="bSend" style="font-size:16px;padding:10px 26px">ส่งใบขอ (Submit)</button>
    <p class="hint" id="sentInfo"></p>
@@ -496,6 +499,7 @@ function showSent(){const e=$("#sentInfo"),b=$("#bSend");if(!e||!R)return;const 
  e.textContent=s?`ส่งแล้ว ${R.sendCount||1} ครั้ง · ล่าสุด ${new Date(s).toLocaleString("th-TH")} — แก้ไขข้อมูลได้ แล้วกดส่งฉบับแก้ไข`:"";
  if(b&&!b.disabled)b.textContent=s?"ส่งฉบับแก้ไข (Re-submit)":"ส่งใบขอ (Submit)"}
 
+$("#bXlsx2").onclick=()=>$("#bXlsx").click();$("#bPdf2").onclick=()=>$("#bPdf").click();
 /* ---------- boot ---------- */
 async function boot(){
  const start=addDays(todayISO(),1);R=blank(start);renderAll();setSt("กำลังเชื่อมต่อ…");
@@ -508,7 +512,7 @@ async function boot(){
    if(first&&!s.metadata.fromCache){first=false;clearTimeout(timer);openDate(start)}},()=>{clearTimeout(timer);setSt("เชื่อมต่อข้อมูลไม่ได้","warn")})}
  else{list=await store.localList();renderList();openDate(start)}
  if(!canWrite)setSt("ดูอย่างเดียว","warn");
- if(!db&&location.protocol.startsWith("http")){$("#sendCard").style.display="";$("#navDrp").hidden=false}
+ if(!db&&location.protocol.startsWith("http")){$("#sendCard").style.display=""}
 }
 boot();
 </script>
