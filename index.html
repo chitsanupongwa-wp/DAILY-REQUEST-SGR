@@ -59,10 +59,17 @@ table.t td.x{width:28px;text-align:center}
 .hint{font-size:12.5px;color:var(--mute);margin:6px 0 0}
 @media(max-width:700px){
  table.items thead{display:none}
- table.items tr{display:grid;grid-template-columns:30px 1fr 1fr 28px;gap:6px;padding:10px 0;border-bottom:1px solid var(--line)}
- table.items td{border:0;padding:0;width:auto!important}
- table.items td.d{grid-column:2/4}
- table.items td.x{grid-row:1;grid-column:4}
+ table.items tr{display:grid;grid-template-columns:26px minmax(0,1fr) minmax(0,1fr) 26px;gap:6px 8px;padding:10px 0;border-bottom:1px solid var(--line)}
+ table.items td{border:0;padding:0;width:auto!important;min-width:0}
+ table.items td.no{grid-row:1/3;grid-column:1;padding-top:22px}
+ table.items td.d{grid-column:2/4;grid-row:1}
+ table.items td.loc{grid-column:2;grid-row:2}
+ table.items td.rem{grid-column:3;grid-row:2}
+ table.items td.x{grid-row:1;grid-column:4;padding-top:22px}
+ .top-in{gap:8px;padding:8px 12px}
+ .hist{width:100%}.hist input{flex:0 0 140px}.hist select{flex:1;max-width:none}
+ .status{min-width:0;text-align:left;margin-right:auto}
+ .pg-h .del{margin-left:0}
  table.items td[data-l]::before{content:attr(data-l);display:block;font-size:11.5px;color:var(--mute)}
  .card{padding:12px}main{padding:10px}
 }
@@ -274,8 +281,8 @@ document.querySelectorAll("[data-cat]").forEach(el=>el.addEventListener("change"
 function renderItems(){
  $("#tbI").innerHTML=R.items.map((it,i)=>`<tr data-i="${i}"><td class="no">${i+1}</td>
   <td class="d" data-l="Description of Works"><input class="inp" data-f="desc" value="${esc(it.desc)}" placeholder="รายละเอียดงาน"></td>
-  <td style="width:200px" data-l="Location"><input class="inp" data-f="loc" value="${esc(it.loc)}" placeholder="ชั้น/โซน"></td>
-  <td style="width:170px" data-l="Remark"><input class="inp" data-f="rem" value="${esc(it.rem)}"></td>
+  <td class="loc" style="width:200px" data-l="Location"><input class="inp" data-f="loc" value="${esc(it.loc)}" placeholder="ชั้น/โซน"></td>
+  <td class="rem" style="width:170px" data-l="Remark"><input class="inp" data-f="rem" value="${esc(it.rem)}"></td>
   <td class="x"><button class="xbtn" data-del title="ลบ">×</button></td></tr>`).join("");
  $("#bAddItem").disabled=R.items.length>=MAX_ITEMS}
 $("#tbI").addEventListener("input",e=>{const f=e.target.dataset.f;if(!f)return;R.items[+e.target.closest("tr").dataset.i][f]=e.target.value;touch()});
